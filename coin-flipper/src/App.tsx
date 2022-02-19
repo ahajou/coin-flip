@@ -75,7 +75,7 @@ function App() {
 
   useEffect(() => {
     const checkConnection = async function () {
-      const web3 = new Web3(Web3.givenProvider || 'http://localhost:7545');
+      const web3 = new Web3(Web3.givenProvider || 'http://localhost:8545');
       setWeb3(web3);
       
       try {
