@@ -45,19 +45,19 @@ async function main() {
   let response = await coinFlip.connect(addr1).play({value: ethers.utils.parseEther('0.1')});
   let eventArgs = (await response.wait()).events[0].args;
   console.log("First game winning: ", eventArgs.winner);
-  console.log("First game message", eventArgs._msg);
+  console.log("First game message", eventArgs.message);
   console.log("--------");
 
   response = await coinFlip.connect(addr1).play({value: ethers.utils.parseEther('0.1')});
   eventArgs = (await response.wait()).events[0].args;
   console.log("Second game winning: ", eventArgs.winner);
-  console.log("Second game message", eventArgs._msg);
+  console.log("Second game message", eventArgs.message);
   console.log("--------");
 
   response = await coinFlip.connect(addr2).play({value: ethers.utils.parseEther('0.1')});
   eventArgs = (await response.wait()).events[0].args;
   console.log("Third game winning: ", eventArgs.winner);
-  console.log("Third game message", eventArgs._msg);
+  console.log("Third game message", eventArgs.message);
   console.log("--------");
   
   console.log("");

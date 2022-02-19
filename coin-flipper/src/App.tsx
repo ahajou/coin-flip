@@ -50,7 +50,7 @@ function App() {
     setBalance(+web3.utils.fromWei(bb, 'ether'));
   }
 
-  const initializeConnection = async (web3: Web3, account: string) => {
+  const initConnection = async (web3: Web3, account: string) => {
     setAccount(account);
 
     const gameContract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
@@ -70,7 +70,7 @@ function App() {
       return;
     }
 
-    await initializeConnection(web3, accounts[0]);
+    await initConnection(web3, accounts[0]);
   }
 
   useEffect(() => {
@@ -80,7 +80,7 @@ function App() {
       
       try {
         const accounts = await web3.eth.getAccounts();
-        await initializeConnection(web3, accounts[0]);
+        await initConnection(web3, accounts[0]);
       }
       catch {
 

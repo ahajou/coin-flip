@@ -94,7 +94,7 @@ export interface CoinFlipInterface extends utils.Interface {
 
 export type StatusEvent = TypedEvent<
   [string, string, BigNumber, boolean],
-  { _msg: string; user: string; amount: BigNumber; winner: boolean }
+  { message: string; user: string; amount: BigNumber; winner: boolean }
 >;
 
 export type StatusEventFilter = TypedEventFilter<StatusEvent>;
@@ -249,13 +249,13 @@ export interface CoinFlip extends BaseContract {
 
   filters: {
     "Status(string,address,uint256,bool)"(
-      _msg?: null,
+      message?: null,
       user?: null,
       amount?: null,
       winner?: null
     ): StatusEventFilter;
     Status(
-      _msg?: null,
+      message?: null,
       user?: null,
       amount?: null,
       winner?: null

@@ -115,7 +115,7 @@ describe("CoinFlip", function () {
     const res = await response.wait();
     const eventArgs = res.events[0].args;
     // console.log("eventArgs.winner", eventArgs.winner);
-    // console.log("eventArgs.winner", eventArgs._msg);
+    // console.log("eventArgs.winner", eventArgs.message);
 
     expect(await coinFlip.getGameCount()).to.equal(1);
 

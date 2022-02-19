@@ -22,7 +22,7 @@ contract CoinFlip {
     Game[] private playedGames;
 
     event Status(
-		string _msg, 
+		string message, 
 		address user, 
 		uint amount,
 		bool winner
