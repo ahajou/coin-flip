@@ -60,4 +60,4 @@ Backend:
 
 ## Error: nonce too high
 This error appears after restarting the local blockchain
-To get rid, please reset the account in Metamask
+To get rid, please reset the account in Metamask, please refer to this [article](https://medium.com/@thelasthash/solved-nonce-too-high-error-with-metamask-and-hardhat-adc66f092cd).
