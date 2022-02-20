@@ -1,46 +1,64 @@
-# Advanced Sample Hardhat Project
+# Coinflip application
 
-This project demonstrates an advanced Hardhat use case, integrating other tools commonly used alongside Hardhat in the ecosystem.
+The purpose of the project is to demonstrate a full stack application in Web3.
 
-The project comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts. It also comes with a variety of other tools, preconfigured to work with the project code.
+Frontend:
+* React
+* Web3.js
 
-Try running some of the following tasks:
+Backend:
+* Hardhat
+* Solidity
 
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-npx hardhat help
-REPORT_GAS=true npx hardhat test
-npx hardhat coverage
-npx hardhat run scripts/deploy.ts
-TS_NODE_FILES=true npx ts-node scripts/deploy.ts
-npx eslint '**/*.{js,ts}'
-npx eslint '**/*.{js,ts}' --fix
-npx prettier '**/*.{json,sol,md}' --check
-npx prettier '**/*.{json,sol,md}' --write
-npx solhint 'contracts/**/*.sol'
-npx solhint 'contracts/**/*.sol' --fix
-```
+# How to run
 
-# Etherscan verification
+Backend:
+* In the root directory of the application, run
+  * `npm install`
+* Then run
+  * `npx hardhat node`
+  * This will start a blockchain running on localhost
+  * Save the private keys of the pre-loaded account
+* Open a new terminal window in the same directory, then run
+  * `npx hardhat run .\scripts\deploy.ts --network localhost`
+  * This will deploy the coinflip contract to the running blockchain
+* Copy the contract address deployed
+  * *starting with 0x.....*
 
-To try out Etherscan verification, you first need to deploy a contract to an Ethereum network that's supported by Etherscan, such as Ropsten.
+Frontend
+* In the code editor, navigate to App.tsx in the folder: `\coin-flipper\src`
+* Navigate to the subfolder coinflipper in the terminal window
+* Run `npm install`
+* Run `npm start`
+* In metamask browser extension, make sure you are connecting to the local host network
+  * Parameters to add if not available
+    * RPX URL: `http://127.0.0.1:8545/`
+    * Chain id: `31337`
+* You can configure one of the preloaded account that are saved earlier
 
-In this project, copy the .env.example file to a file named .env, and then edit it to fill in the details. Enter your Etherscan API key, your Ropsten node URL (eg from Alchemy), and the private key of the account which will send the deployment transaction. With a valid .env file in place, first deploy your contract:
 
-```shell
-hardhat run --network ropsten scripts/sample-script.ts
-```
+# How to run tests
 
-Then, copy the deployment address and paste it in to replace `DEPLOYED_CONTRACT_ADDRESS` in this command:
+Backend:
+* In the root directory of the application, run
+  * `npm install`
+* Then run
+  * `npx hardhat test`
 
-```shell
-npx hardhat verify --network ropsten DEPLOYED_CONTRACT_ADDRESS "Hello, Hardhat!"
-```
+# Todo/Improvements
 
-# Performance optimizations
+- [x] Create a solidity contract to flip a coin
+- [x] Create tests to test the functionality of the contract
+- [x] Create a frontend react application to interact from the contract
+- [x] Implement connect button functionality (instead of just connecting at app start)
+- [ ] Replace web3 with web3-react
+- [ ] Split the code from App.tsx to separate components
+- [ ] Styling with Tailwind CSS
+- [ ] Deploy backend to one of etherum test networks
+- [ ] Deploy frontend to a static hosting service (like github actions)
 
-For faster runs of your tests and scripts, consider skipping ts-node's type checking by setting the environment variable `TS_NODE_TRANSPILE_ONLY` to `1` in hardhat's environment. For more details see [the documentation](https://hardhat.org/guides/typescript.html#performance-optimizations).
+# Common issues faced and solutions
+
+## Error: nonce too high
+This error appears after restarting the local blockchain
+To get rid, please reset the account in Metamask

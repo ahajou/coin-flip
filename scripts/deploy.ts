@@ -29,7 +29,7 @@ async function main() {
   const provider = waffle.provider;
 
   let contractBalance = await provider.getBalance(coinFlip.address);
-  console.log("Constract balance before deposit:", contractBalance);
+  console.log("Contract balance before deposit:", contractBalance);
   
   console.log("");
 
@@ -38,7 +38,7 @@ async function main() {
   });
 
   contractBalance = await provider.getBalance(coinFlip.address);
-  console.log("Constract balance after deposit:", contractBalance);
+  console.log("Contract balance after deposit:", contractBalance);
   
   console.log("");
 
@@ -63,7 +63,7 @@ async function main() {
   console.log("");
 
   contractBalance = await provider.getBalance(coinFlip.address);
-  console.log("Constract balance after deposit:", contractBalance);
+  console.log("Contract balance after deposit:", contractBalance);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
