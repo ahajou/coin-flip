@@ -1,32 +1,23 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import Web3 from 'web3';
 import contract from './CoinFlip.json';
 import { Contract } from 'web3-eth-contract';
+import { Game } from './Models/Game';
+import { Connected } from './Components/Connected';
 
 const CONTRACT_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 const CONTRACT_ABI:any = contract.abi;
 
-interface Game {
-  addr: string;
-  blocknumber: number;
-  blocktimestamp: number;
-  bet: number;
-  prize: number;
-  winner: boolean;
-}
-
 function App() {
-  const [account, setAccount] = useState<string>();
-  const [balance, setBalance] = useState<number>();
+  const [account, setAccount] = useState<string>('');
+  const [balance, setBalance] = useState<number>(0);
 
   const [web3, setWeb3] = useState<Web3>();
   const [contract, setContract] = useState<Contract>();
-  const [games, setGames] = useState<Game[]>();
+  const [games, setGames] = useState<Game[]>([]);
   
-  const [amountToBet, setAmountToBet] = useState<number>(0.1);
-
-  const refreshGames = async (cc: Contract) => {
+  const refreshGames = async (web3: Web3, cc: Contract) => {
     const newGamesList:Game[] = [];
 
     const gameCount = await cc.methods.getGameCount().call();
@@ -36,8 +27,8 @@ function App() {
         addr: game.addr,
         blocknumber: game.blocknumber,
         blocktimestamp: game.blocktimestamp,
-        bet: game.bet,
-        prize: game.prize,
+        bet: +web3.utils.fromWei(game.bet, 'ether'),
+        prize: +web3.utils.fromWei(game.prize, 'ether'),
         winner: game.winner
       });
     }
@@ -57,7 +48,7 @@ function App() {
     setContract(gameContract);
 
     await refreshBalance(web3, account);
-    await refreshGames(gameContract);
+    await refreshGames(web3, gameContract);
   };
 
   const connect = async () => {
@@ -90,84 +81,23 @@ function App() {
     checkConnection();
   }, []);
 
-  const bet = async () => {
+  const bet = async (amountToBet: number) => {
     if(!contract || !web3 || !account) {
       return;
     }
 
-    const response = await contract.methods.play().send({from: account, value: web3.utils.toWei(amountToBet.toString(), 'ether')});
-    console.log(response);
+    await contract.methods.play().send({from: account, value: web3.utils.toWei(amountToBet.toString(), 'ether')});
+    // console.log(response);
 
-    await refreshGames(contract);
+    await refreshGames(web3, contract);
     await refreshBalance(web3, account);
   }
-
-  const displayPreviousGames = () => {
-    if(!games) {
-      return (<div>No previous games</div>);
-    }
-
-    return (
-      <table className='games'>
-        <thead>
-          <tr>
-            <th>Address</th>
-            <th>block</th>
-            <th>timestamp</th>
-            <th>winner</th>
-            <th>bet</th>
-            <th>prize</th>
-          </tr>
-        </thead>
-        <tbody>
-          {games.map((game, index) => (
-            <tr className='game' key={index}>
-              <td>{game.addr}</td>
-              <td>{game.blocknumber}</td>
-              <td>{game.blocktimestamp}</td>
-              <td>{game.winner.toString()}</td>
-              <td>{web3?.utils.fromWei(game.bet.toString(), 'ether')}</td>
-              <td>{web3?.utils.fromWei(game.prize.toString(), 'ether')}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    )
-  }
-
-  const getConnectedHtml = () => {
-    return (
-      <>
-        <div>Your account is: {account}</div>
-        <div>Your balance is: {balance} ethers.</div>
-
-        <br />
-        <br />
-
-        <input 
-          value={amountToBet}
-          onChange={e => setAmountToBet(+e.target.value)}
-          type="number"
-          step="0.001"
-          min={0.02}
-          max={0.2}
-          />
-        <button onClick={bet}>Place bet</button>
-
-        <br />
-        <br />
-
-        {displayPreviousGames()}
-      </>
-    );
-  }
-  
 
   return (
     <div className='main-app'>
       <h1>Coin Flip application</h1>
       {account 
-        ? getConnectedHtml()
+        ? <Connected games={games} account={account} balance={balance} placeBet={bet} />
         : <div><i>No account connected.</i> <button onClick={connect}>Connect</button></div>
       }
     </div>

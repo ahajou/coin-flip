@@ -36,7 +36,6 @@ Frontend
     * Chain id: `31337`
 * You can configure one of the preloaded account that are saved earlier
 
-
 # How to run tests
 
 Backend:
@@ -52,10 +51,10 @@ Backend:
 - [x] Create a frontend react application to interact from the contract
 - [x] Implement connect button functionality (instead of just connecting at app start)
 - [ ] Replace web3 with web3-react
-- [ ] Split the code from App.tsx to separate components
+- [x] Split App.tsx to separate components
 - [ ] Styling with Tailwind CSS
 - [ ] Deploy backend to one of etherum test networks
-- [ ] Deploy frontend to a static hosting service (like github actions)
+- [ ] Deploy frontend to a static hosting service (like github pages)
 
 # Common issues faced and solutions
 
