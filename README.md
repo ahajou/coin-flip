@@ -52,7 +52,7 @@ Backend:
 - [x] Implement connect button functionality (instead of just connecting at app start)
 - [ ] Replace web3 with web3-react
 - [x] Split App.tsx to separate components
-- [ ] Styling with Tailwind CSS
+- [x] Styling with Tailwind CSS
 - [ ] Deploy backend to one of etherum test networks
 - [ ] Deploy frontend to a static hosting service (like github pages)
 
