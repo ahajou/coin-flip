@@ -130,8 +130,16 @@ function HomePage() {
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <h1 className="font-medium leading-tight text-5xl mt-0 mb-2 text-blue-600">
+    <div
+      style={{
+        textAlign: "center",
+      }}
+    >
+      <h1
+        style={{
+          color: "blue",
+        }}
+      >
         Coin Flipper
       </h1>
       {web3ReactContext.active ? (
@@ -143,16 +151,12 @@ function HomePage() {
         />
       ) : (
         <div>
-          <div
-            className="bg-yellow-100 rounded-lg py-5 px-6 mb-3 text-base text-yellow-700 inline-flex items-center w-full"
-            role="alert"
-          >
+          <div role="alert">
             <svg
               aria-hidden="true"
               focusable="false"
               data-prefix="fas"
               data-icon="exclamation-triangle"
-              className="w-4 h-4 mr-2 fill-current"
               role="img"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 576 512"
@@ -164,12 +168,7 @@ function HomePage() {
             </svg>
             No account connected.
           </div>
-          <button
-            className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-            onClick={connect}
-          >
-            Connect
-          </button>
+          <button onClick={connect}>Connect</button>
         </div>
       )}
     </div>

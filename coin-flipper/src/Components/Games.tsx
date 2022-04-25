@@ -33,7 +33,6 @@ export const Games = ({ games }: { games: Game[] }) => {
     });
     return (
       <div
-        className="bg-blue-100 rounded-lg py-5 px-6 mb-4 text-base text-blue-700 mb-3"
         role="alert"
       >
         No previous games

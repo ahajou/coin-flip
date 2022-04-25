@@ -1,10 +1,36 @@
-
-
-.balance-paper {
-  width: 350px;
+.class-paper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-left: 30%;
+  padding-left: 1%;
+  padding-right: 1%;
   text-align: right;
-  right: 1%;
+  width: 40%;
 }
-.account-paper {
-  width: 350px;
+
+.class-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.class-labels {
+  font-weight: 600;
+}
+
+.betting-table {
+  display: flex;
+  flex-direction: row;
+  margin-top: 5%;
+  margin-left: 45%;
+}
+
+.bet-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.bet-btn {
+  display: flex;
+  flex-direction: column;
 }
