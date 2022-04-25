@@ -1,4 +1,10 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
+
+.balance-paper {
+  width: 350px;
+  text-align: right;
+  right: 1%;
+}
+.account-paper {
+  width: 350px;
+}

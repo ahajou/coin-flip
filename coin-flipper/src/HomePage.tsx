@@ -7,13 +7,13 @@ import { Game } from "./Models/Game";
 import { Connected } from "./Components/Connected";
 import { useWeb3React } from "@web3-react/core";
 import { injected } from "./Components/wallet/WalletConnector";
+import { getContract } from "./Components/wallet/Contract";
 
 const CONTRACT_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 const CONTRACT_ABI: any = contract.abi;
 
 function HomePage() {
-  const { active, account, library, connector, activate, deactivate } =
-    useWeb3React();
+  const web3ReactContext = useWeb3React();
 
   //   const [accounts, setAccount] = useState<string>("");
   const [balance, setBalance] = useState<number>(0);
@@ -42,17 +42,26 @@ function HomePage() {
   };
 
   const refreshBalance = async (web3: Web3) => {
-    if (account != undefined && account != null) {
-      const bb = await web3.eth.getBalance(account);
+    if (
+      web3ReactContext.account !== undefined &&
+      web3ReactContext.account !== null
+    ) {
+      const bb = await web3.eth.getBalance(web3ReactContext.account);
       setBalance(+web3.utils.fromWei(bb, "ether"));
     }
   };
 
   const initConnection = async (web3: Web3) => {
     // setAccount(account);
-
-    console.log(account);
-    const gameContract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
+    try {
+      await web3ReactContext.activate(injected);
+    } catch (err) {
+      console.log(err);
+    }
+    const gameContract = getContract(
+      web3ReactContext.library,
+      web3ReactContext.account
+    );
     setContract(gameContract);
 
     await refreshBalance(web3);
@@ -63,26 +72,24 @@ function HomePage() {
     // if (!web3) {
     //   return;
     // }
-
     // const accounts = await web3?.eth.requestAccounts();
     // if (!accounts) {
     //   return;
     // }
-
     // await initConnection(web3, accounts[0]);
-    if (!active) {
-      return;
-    }
-    if (!account) {
-      return;
-    }
-    if (web3 != undefined) {
-      try {
-        await initConnection(web3);
-      } catch (err) {
-        console.log(err);
-      }
-    }
+    // if (!active) {
+    //   return;
+    // }
+    // if (!account) {
+    //   return;
+    // }
+    // if (web3 != undefined) {
+    //   try {
+    //     await initConnection(web3);
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // }
   };
 
   useEffect(() => {
@@ -110,18 +117,16 @@ function HomePage() {
   }, []);
 
   const bet = async (amountToBet: number) => {
-    if (!contract || !web3 || !account) {
-      return;
-    }
-
-    await contract.methods.play().send({
-      from: account,
-      value: web3.utils.toWei(amountToBet.toString(), "ether"),
-    });
+    // if (!contract || !web3 || !account) {
+    //   return;
+    // }
+    // await contract.methods.play().send({
+    //   from: account,
+    //   value: web3.utils.toWei(amountToBet.toString(), "ether"),
+    // });
     // console.log(response);
-
-    await refreshGames(web3, contract);
-    await refreshBalance(web3);
+    // await refreshGames(web3, contract);
+    // await refreshBalance(web3);
   };
 
   return (
@@ -129,10 +134,10 @@ function HomePage() {
       <h1 className="font-medium leading-tight text-5xl mt-0 mb-2 text-blue-600">
         Coin Flipper
       </h1>
-      {active ? (
+      {web3ReactContext.active ? (
         <Connected
           games={games}
-          account={!account ? "" : account}
+          account={!web3ReactContext.account ? "" : web3ReactContext.account}
           balance={balance}
           placeBet={bet}
         />
